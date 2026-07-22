@@ -1,1 +1,156 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>സ്കൂൾ കലയോത്സവം 2026 - സ്കോർബോർഡ്</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f6; margin: 0; padding: 20px; }
+        .container { max-width: 900px; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin: auto; }
+        h2, h3 { color: #333; text-align: center; }
+        label { font-weight: bold; display: block; margin-top: 10px; }
+        input, select, button { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        button { background: #28a745; color: white; font-size: 16px; border: none; margin-top: 15px; cursor: pointer; }
+        button:hover { background: #218838; }
+        .admin-section { background: #fff3cd; padding: 15px; border-radius: 5px; margin-bottom: 20px; border: 1px solid #ffeeba; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: center; font-size: 13px; }
+        th { background: #007bff; color: white; }
+        .edit-btn { background: #ffc107; color: black; padding: 5px 10px; border: none; cursor: pointer; border-radius: 3px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🏆 സ്കൂൾ കലയോത്സവം രജിസ്ട്രേഷൻ & സ്കോർബോർഡ്</h2>
+
+    <!-- Admin Login Section -->
+    <div class="admin-section" id="adminLoginDiv">
+        <h4>🔒 അഡ്മിൻ ലോഗിൻ (മാർക്ക് എഡിറ്റ് ചെയ്യാൻ)</h4>
+        <input type="password" id="adminPass" placeholder="அഡ്മിൻ പാസ്‌വേഡ് നൽകുക (ajay)">
+        <button onclick="adminLogin()" style="background: #ff5722;">ലോഗിൻ ചെയ്യുക</button>
+        <p id="adminStatus" style="color: green; font-weight: bold; margin-top: 5px;"></p>
+    </div>
+
+    <!-- Registration Form -->
+    <form action="/register" method="POST">
+        <h3>പുതിയ രജിസ്ട്രേഷൻ</h3>
+        <label>കുട്ടിയുടെ പേര്:</label>
+        <input type="text" name="name" required placeholder="പൂർണ്ണമായ പേര്">
+
+        <label>വിഭാഗം (Category):</label>
+        <select name="category" required>
+            <option value="LP">LP വിഭാഗം</option>
+            <option value="UP">UP വിഭാഗം</option>
+            <option value="High School">ഹൈസ്കൂൾ വിഭാഗം</option>
+            <option value="HSS">ഹയർ സെക്കൻഡറി</option>
+        </select>
+
+        <label>പങ്കെടുക്കുന്ന ഇനങ്ങൾ:</label>
+        <input type="text" name="items" required placeholder="ഉദാ: മോണോആക്ട്, പ്രസംഗം">
+
+        <label>അടച്ച തുക (₹):</label>
+        <input type="number" name="fee" required placeholder="ഫീസ് തുക">
+
+        <button type="submit">രജിസ്റ്റർ ചെയ്യുക</button>
+    </form>
+
+    <div class="list-section" style="margin-top: 40px;">
+        <h3>📋 കുട്ടികളുടെ വിവരങ്ങളും സ്കോർബോർഡും</h3>
+        <table id="pTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>പേര്</th>
+                    <th>വിഭാഗം</th>
+                    <th>ഇനങ്ങൾ</th>
+                    <th>മാർക്ക്</th>
+                    <th>ടോട്ടൽ</th>
+                    <th>ശതമാനം (%)</th>
+                    <th>ഗ്രേഡ്</th>
+                    <th>നടപടി</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will load here dynamically -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    let isAdmin = false;
+
+    function adminLogin() {
+        const pass = document.getElementById('adminPass').value;
+        fetch('/admin-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password: pass })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                isAdmin = true;
+                document.getElementById('adminStatus').innerText = "✅ അഡ്മിൻ ആക്സസ് വിജയം! നിങ്ങൾക്ക് ഇപ്പോൾ മാർക്കുകൾ എഡിറ്റ് ചെയ്യാം.";
+                document.getElementById('adminLoginDiv').style.background = "#d4edda";
+                loadParticipants();
+            } else {
+                alert(data.message);
+            }
+        });
+    }
+
+    function loadParticipants() {
+        fetch('/participants')
+        .then(res => res.json())
+        .then(data => {
+            const tbody = document.querySelector('#pTable tbody');
+            tbody.innerHTML = '';
+            data.forEach(p => {
+                let actionBtn = isAdmin ? `<button class="edit-btn" onclick="editMarks(${p.id}, ${p.marks}, ${p.total_marks})">എഡിറ്റ്</button>` : 'പ്രവേശനം ഇല്ല';
+                
+                tbody.innerHTML += `<tr>
+                    <td>#${p.id}</td>
+                    <td><b>${p.name}</b></td>
+                    <td>${p.category}</td>
+                    <td>${p.items}</td>
+                    <td>${p.marks}</td>
+                    <td>${p.total_marks}</td>
+                    <td>${p.percentage}%</td>
+                    <td><b>${p.grade}</b></td>
+                    <td>${actionBtn}</td>
+                </tr>`;
+            });
+        });
+    }
+
+    function editMarks(id, currentMarks, currentTotal) {
+        let newMarks = prompt("പുതിയ മാർക്ക് നൽകുക:", currentMarks);
+        if (newMarks === null) return;
+        let newTotal = prompt("ആകെ മാർക്ക് (Total Marks) നൽകുക:", currentTotal);
+        if (newTotal === null) return;
+
+        fetch(`/update-participant/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ marks: parseInt(newMarks), total_marks: parseInt(newTotal) })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+                loadParticipants();
+            } else {
+                alert(data.message);
+            }
+        });
+    }
+
+    // പേജ് ലോഡ് ചെയ്യുമ്പോൾ തന്നെ ലിസ്റ്റ് കാണിക്കാൻ
+    loadParticipants();
+</script>
+
+</body>
+</html>
 
