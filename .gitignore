@@ -18,6 +18,7 @@ rad.json
 *.g.xlf
 #License-files
 *.bclicense
-*.flf
+*kalolsavam.db
+kalolsavam.db
 #Test results file
 TestResults.xml
