@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>സ്കൂൾ കലയോത്സവം 2026 - സെ എക്സാം & സർട്ടിഫിക്കറ്റ് പോർട്ടൽ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/image/Kalolsavam.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 950px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+            margin: auto;
+        }
+        h2, h3 { color: #333; text-align: center; }
+        label { font-weight: bold; display: block; margin-top: 10px; }
+        input, select, button { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        button { background: #28a745; color: white; font-size: 16px; border: none; margin-top: 15px; cursor: pointer; }
+        button:hover { background: #218838; }
+        .admin-section, .quiz-section, .imp-section, .re-exam-section { background: #fff3cd; padding: 15px; border-radius: 5px; margin-bottom: 20px; border: 1px solid #ffeeba; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; font-size: 12px; background: white; }
+        th { background: #007bff; color: white; }
+        .edit-btn { background: #ffc107; color: black; padding: 5px 8px; border: none; cursor: pointer; border-radius: 3px; font-weight: bold; }
+        .cert-btn { background: #17a2b8; color: white; padding: 5px 8px; border: none; cursor: pointer; border-radius: 3px; text-decoration: none; display: inline-block; font-weight: bold; margin-top: 2px;}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🏆 സ്കൂൾ കലയോത്സവം & സെ എക്സാം പോർട്ടൽ</h2>
+
+    <!-- Admin Login Section -->
+    <div class="admin-section" id="adminLoginDiv">
+        <h4>🔒 അഡ്മിൻ ലോഗിൻ</h4>
+        <input type="password" id="adminPass" placeholder="അഡ്മിൻ പാസ്‌വേഡ് നൽകുക (ajay)">
+        <button onclick="adminLogin()" style="background: #ff5722;">ലോഗിൻ ചെയ്യുക</button>
+        <p id="adminStatus" style="color: green; font-weight: bold; margin-top: 5px;"></p>
+    </div>
+
+    <!-- Registration Form -->
+    <form action="/register" method="POST">
+        <h3>പുതിയ രജിസ്ട്രേഷൻ</h3>
+        <label>കുട്ടിയുടെ പേര്:</label>
+        <input type="text" name="name" required placeholder="പൂർണ്ണമായ പേര്">
+        <label>അച്ഛന്റെ പേര്:</label>
+        <input type="text" name="father_name" required placeholder="അച്ഛന്റെ പേര്">
+        <label>അമ്മയുടെ ഫോൺ നമ്പർ:</label>
+        <input type="text" name="mother_phone" required placeholder="ഫോൺ നമ്പർ">
+        <label>വിഭാഗം (Category):</label>
+        <select name="category" required>
+            <option value="LP">LP വിഭാഗം</option>
+            <option value="UP">UP വിഭാഗം</option>
+            <option value="High School">ഹൈസ്കൂൾ വിഭാഗം</option>
+            <option value="HSS">ഹയർ സെക്കൻഡറി</option>
+        </select>
+        <label>പങ്കെടുക്കുന്ന ഇനങ്ങൾ:</label>
+        <input type="text" name="items" required placeholder="ഉദാ: മോണോആക്ട്, പ്രസംഗം">
+        <label>അടച്ച തുക (₹):</label>
+        <input type="number" name="fee" required placeholder="ഫീസ് തുക">
+        <button type="submit">രജിസ്റ്റർ ചെയ്യുക</button>
+    </form>
+<title> this low mark in studdings </title>
+    <!-- Improvement Exam Section -->
+    <div class="imp-section" style="background: #e2f0d9; border-color: #c3e6cb;">
+        <h3 style="color: #155724;">🚀 ഇംപ്രൂവ്മെന്റ് ടെസ്റ്റ്</h3>
+        <label>കുട്ടിയുടെ ID:</label>
+        <input type="number" id="impStudentId" placeholder="ID നൽകുക">
+        <label>കുട്ടിയുടെ പേര്:</label>
+        <input type="text" id="impStudentName" placeholder="പേര് നൽകുക">
+        <button type="button" onclick="takeImprovementTest()" style="background: #28a745;">ഇംപ്രൂവ്മെന്റ് ടെസ്റ്റ് എഴുതുക</button>
+    </div>
+
+    <!-- 🌟 Re-Exam (സെ എക്സാം) Section (30 മാർക്കിൽ കുറവുള്ളവർക്ക്) -->
+    <div class="re-exam-section" style="background: #f8d7da; border-color: #f5c6cb;">
+        <h3 style="color: #721c24;">⚠️ സെ എക്സാം (Supplementary Exam - 80 ചോദ്യങ്ങൾ)</h3>
+        <p style="font-size: 13px; color: #721c24;">30 മാർക്കിൽ താഴെയുള്ള കുട്ടികൾക്ക് മാത്രം 80 ചോദ്യങ്ങൾ അടങ്ങിയ ഈ സെ എക്സാം എഴുതി മാർക്ക് മെച്ചപ്പെടുത്താം.</p>
+        <label>കുട്ടിയുടെ ID:</label>
+        <input type="number" id="reStudentId" placeholder="കുട്ടിയുടെ ID നൽകുക">
+        <button type="button" onclick="takeReExam()" style="background: #dc3545;">സെ എക്സാം എഴുതുക (80 ചോദ്യങ്ങൾ)</button>
+    </div>
+
+    <!-- Scoreboard Table -->
+    <div class="list-section" style="margin-top: 30px;">
+        <h3>📋 കുട്ടികളുടെ പ്രധാന സ്കോർബോർഡ്</h3>
+        <table id="pTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>പേര്</th>
+                    <th>കലാമേള</th>
+                    <th>ക്വിസ്</th>
+                    <th>സെ എക്സാം (80 Qs)</th>
+                    <th>ആകെ മാർക്ക്</th>
+                    <th>ഗ്രേഡ്</th>
+                    <th>സർട്ടിഫിക്കറ്റ് & നടപടി</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will load here -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Image -->
+    <div style="text-align: center; margin-top: 30px;">
+        <img src="/image/Girl.jpg" alt="Kalolsavam Image" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+    </div>
+</div>
+
+<script>
+    let isAdmin = false;
+
+    function adminLogin() {
+        const pass = document.getElementById('adminPass').value;
+        fetch('/admin-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password: pass })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                isAdmin = true;
+                document.getElementById('adminStatus').innerText = "✅ അഡ്മിൻ വിജയം!";
+                document.getElementById('adminLoginDiv').style.background = "#d4edda";
+                loadParticipants();
+            } else {
+                alert(data.message);
+            }
+        });
+    }
+
+    function loadParticipants() {
+        fetch('/participants')
+        .then(res => res.json())
+        .then(data => {
+            const tbody = document.querySelector('#pTable tbody');
+            tbody.innerHTML = '';
+            data.forEach(p => {
+                let actionBtn = isAdmin ? `<button class="edit-btn" onclick="editMarks(${p.id}, ${p.marks}, ${p.total_marks}, ${p.quiz_marks}, ${p.re_exam_marks})">എഡിറ്റ്</button>` : 'അനുവാദമില്ല';
+                let certBtn = `<a href="/certificate/${p.id}" target="_blank" class="cert-btn">സർട്ടിഫിക്കറ്റ് 📄</a>`;
+                let netTotalMarks = p.marks + (p.quiz_marks || 0) + (p.re_exam_marks || 0);
+
+                tbody.innerHTML += `<tr>
+                    <td>#${p.id}</td>
+                    <td><b>${p.name}</b></td>
+                    <td>${p.marks}</td>
+                    <td>${p.quiz_marks}</td>
+                    <td style="color: #d9534f; font-weight: bold;">${p.re_exam_marks}</td>
+                    <td><b>${netTotalMarks}</b></td>
+                    <td><b>${p.grade}</b></td>
+                    <td>${certBtn} <br> ${actionBtn}</td>
+                </tr>`;
+            });
+        });
+    }
+
+    function takeImprovementTest() {
+        let pId = document.getElementById('impStudentId').value;
+        let pName = document.getElementById('impStudentName').value;
+        if(!pId || !pName) { alert("ID-യും പേരും നൽകുക!"); return; }
+
+        let q1 = prompt("സയൻസ് ചോദ്യം: ഫോട്ടോസിന്തസിസ്?", "Chloroplast");
+        let q2 = prompt("ഹാക്കിംഗ് ചോദ്യം: സുരക്ഷിത പ്രോട്ടോക്കോൾ?", "https");
+        let score = 0;
+        if(q1 && q1.toLowerCase().includes("chloroplast")) score += 25;
+        if(q2 && q2.toLowerCase().includes("https")) score += 25;
+
+        fetch('/add-improvement', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ participant_id: parseInt(pId), student_name: pName, imp_marks: score })
+        }).then(res => res.json()).then(data => {
+            alert(`ഇംപ്രൂവ്മെന്റ് മാർക്ക്: ${score} / 50`);
+            loadParticipants();
+        });
+    }
+
+    // 🌟 സെ എക്സാം (80 ചോദ്യങ്ങൾ) ഫങ്ഷൻ
+    function takeReExam() {
+        let pId = document.getElementById('reStudentId').value;
+        if(!pId) { alert("ദയവായി കുട്ടിയുടെ ID നൽകുക!"); return; }
+
+        // ഫസ്റ്റ് ചെക്ക് ചെയ്യാൻ നിലവിലെ ഡാറ്റ എടുക്കുന്നു
+        fetch('/participants')
+        .then(res => res.json())
+        .then(data => {
+            let student = data.find(s => s.id == pId);
+            if(!student) { alert("കുട്ടിയെ കണ്ടെത്താനായില്ല!"); return; }
+
+            let currentTotal = student.marks + student.quiz_marks;
+            if(currentTotal >= 30) {
+                alert(`നിങ്ങൾക്ക് (${currentTotal} മാർക്ക്) ഉണ്ട്. 30 മാർക്കിൽ താഴെയുള്ളവർക്ക് മാത്രമേ സെ എക്സാം എഴുതാൻ സാധിക്കൂ!`);
+                return;
+            }
+
+            let correctAnswers = prompt(`സെ എക്സാം (ആകെ 80 ചോദ്യങ്ങൾ). ശരിയായ ഉത്തരങ്ങളുടെ എണ്ണം നൽകുക (0 മുതൽ 80 വരെ):`, "50");
+            if(correctAnswers === null) return;
+
+            let numCorrect = parseInt(correctAnswers);
+            if(isNaN(numCorrect) || numCorrect < 0 || numCorrect > 80) {
+                alert("ദയവായി 0-നും 80-നും ഇടയിലുള്ള ശരിയായ എണ്ണം നൽകുക!");
+                return;
+            }
+
+            // 80 ചോദ്യങ്ങൾക്ക് ആകെ 80 മാർക്ക് എന്ന് കണക്കാക്കുന്നു (ഓരോ ചോദ്യത്തിനും 1 മാർക്ക്)
+            let reExamScore = numCorrect * 1.0;
+
+            fetch('/add-re-exam', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ participant_id: parseInt(pId), re_marks: reExamScore })
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert(`സെ എക്സാം വിജയകരമായി പൂർത്തിയായി! ലഭിച്ച മാർക്ക്: ${reExamScore} / 80`);
+                loadParticipants();
+            });
+        });
+    }
+
+    function editMarks(id, currentMarks, currentTotal, currentQuizMarks, currentReMarks) {
+        let newMarks = prompt("കലാമേള മാർക്ക്:", currentMarks);
+        if (newMarks === null) return;
+        let newQuizMarks = prompt("ക്വിസ് മാർക്ക്:", currentQuizMarks);
+        if (newQuizMarks === null) return;
+        let newReMarks = prompt("സെ എക്സാം മാർക്ക് (80-ൽ):", currentReMarks);
+        if (newReMarks === null) return;
+
+        fetch(`/update-participant/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                marks: parseInt(newMarks), 
+                quiz_marks: parseFloat(newQuizMarks), 
+                re_exam_marks: parseFloat(newReMarks),
+                total_marks: 100 
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            alert(data.message);
+            loadParticipants();
+        });
+    }
+
+    loadParticipants();
+</script>
+
+</body>
+</html>
+
