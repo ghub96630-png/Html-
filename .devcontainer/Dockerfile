@@ -15,14 +15,14 @@ RUN ssh-keygen -A && \
     mkdir -p /var/run/sshd
 
 # 1. സൂപ്പർ യൂസർ (hacker) - മുഴുവൻ sudo പവറോടെ
-RUN useradd -m -s /bin/bash hacker && \
-    echo 'hacker:hacker123' | chpasswd && \
+RUN useradd -m -s /bin/bash kannan && \
+    echo 'kannan:hacker123' | chpasswd && \
     usermod -aG wheel hacker && \
-    echo "hacker ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+    echo "kannan ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # 2. സാധാരണ യൂസർ (guest) - sudo പവർ തീരെ ഇല്ലാത്തയാൾ
-RUN useradd -m -s /bin/bash guest && \
-    echo 'guest:guest123' | chpasswd
+RUN useradd -m -s /bin/bash linux && \
+    echo 'linux:guest123' | chpasswd
 
-USER hacker
-WORKDIR /home/hacker
+USER kannan 
+WORKDIR /home/kannan 
