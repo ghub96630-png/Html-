@@ -1,0 +1,15 @@
+{
+  "name": "Gentoo Style Dual-User Secure Environment",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "remoteUser": "hacker",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  },
+  "postCreateCommand": "sudo /usr/sbin/sshd"
+}
