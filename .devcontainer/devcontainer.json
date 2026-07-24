@@ -3,7 +3,7 @@
   "build": {
     "dockerfile": "Dockerfile"
   },
-  "remoteUser": "hacker",
+  "remoteUser": "kannan",
   "customizations": {
     "vscode": {
       "settings": {
